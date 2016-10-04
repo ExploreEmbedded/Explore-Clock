@@ -1,0 +1,157 @@
+Cmp-Mod V01 Created by Cvpcb (2015-01-16 BZR 5376)-product   date = 10/4/2016 12:41:53 PM
+
+BeginCmp
+TimeStamp = /57EF9129;
+Reference = AFF1;
+ValeurCmp = CA56-12;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57EFA0EE;
+Reference = BT1;
+ValeurCmp = CR-2032;
+IdModule  = EE:RTC_Battery_Holder;
+EndCmp
+
+BeginCmp
+TimeStamp = /57EFE2B6;
+Reference = C1;
+ValeurCmp = 0.1uF;
+IdModule  = Capacitors_ThroughHole:C_Disc_D3_P2.5;
+EndCmp
+
+BeginCmp
+TimeStamp = /57EF9D5E;
+Reference = CON1;
+ValeurCmp = BARREL_JACK;
+IdModule  = EE:DC_Jack;
+EndCmp
+
+BeginCmp
+TimeStamp = /57EF9F5F;
+Reference = D1;
+ValeurCmp = D_Schottky;
+IdModule  = EE:Diode_D4;
+EndCmp
+
+BeginCmp
+TimeStamp = /57EF9FF1;
+Reference = D2;
+ValeurCmp = D_Schottky;
+IdModule  = EE:Diode_D4;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F0B7AF;
+Reference = D3;
+ValeurCmp = 0.5 W Straw Hat LED;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57EF89E4;
+Reference = IC1;
+ValeurCmp = ATMEGA328P-P;
+IdModule  = Housings_DIP:DIP-28_W7.62mm_LongPads;
+EndCmp
+
+BeginCmp
+TimeStamp = /57EFC949;
+Reference = P1;
+ValeurCmp = CONN_01X07;
+IdModule  = Pin_Headers:Pin_Header_Straight_1x07;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F0908C;
+Reference = Q1;
+ValeurCmp = BC547;
+IdModule  = TO_SOT_Packages_THT:TO-92_Inline_Wide;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F0B4EA;
+Reference = Q2;
+ValeurCmp = BD139;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F348A8;
+Reference = R1;
+ValeurCmp = E;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F34619;
+Reference = R2;
+ValeurCmp = E;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57EFDF36;
+Reference = R3;
+ValeurCmp = 100K;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F0946C;
+Reference = R4;
+ValeurCmp = 470E;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F0C815;
+Reference = R5;
+ValeurCmp = 470E;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F35736;
+Reference = R6;
+ValeurCmp = 100K;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F080C5;
+Reference = SP1;
+ValeurCmp = Buzzer;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F0F2D4;
+Reference = SW1;
+ValeurCmp = SW_PUSH;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F10D6B;
+Reference = SW2;
+ValeurCmp = SW_PUSH;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57F3662A;
+Reference = U1;
+ValeurCmp = LDR;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /57EF8F1C;
+Reference = Y1;
+ValeurCmp = 32.768KHz;
+IdModule  = ;
+EndCmp
+
+EndListe

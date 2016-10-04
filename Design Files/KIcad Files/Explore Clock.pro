@@ -1,4 +1,4 @@
-update=01-Oct-16 3:55:22 PM
+update=10/4/2016 10:51:12 AM
 version=1
 last_client=kicad
 [pcbnew]
@@ -60,3 +60,4 @@ LibName28=contrib
 LibName29=valves
 LibName30=w_opto
 LibName31=led
+LibName32=H:/PCB_Designes/MCUs-Base-Board-DVB-15001/Hardware/MCU_BaseBoard-cache

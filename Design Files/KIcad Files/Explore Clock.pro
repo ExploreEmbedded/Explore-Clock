@@ -1,4 +1,4 @@
-update=04-Oct-16 12:50:29 PM
+update=10/6/2016 5:25:16 PM
 version=1
 last_client=kicad
 [pcbnew]
@@ -61,4 +61,5 @@ LibName29=contrib
 LibName30=valves
 LibName31=w_opto
 LibName32=led
-LibName33=H:/PCB_Designes/MCUs-Base-Board-DVB-15001/Hardware/MCU_BaseBoard-cache
+LibName33=H:/Github/Explore-M3-Hardware-Design-/Hardware Design Files/ExploreM3-cache
+LibName34=H:/Github/Explore-M3-Hardware-Design-/Hardware Design Files/ExploreM3

@@ -53,11 +53,11 @@ int show_the_time = false;
 
 //You can set always_on to true and the display will stay on all the time
 //This will drain the battery in about 15 hours 
-int always_on = true;
+int always_on = false;
 
 long seconds = 55;
-int minutes = 12;
-int hours = 8;
+int minutes = 19;
+int hours = 10;
 
 //Careful messing with the system color, you can damage the display if
 //you assign the wrong color. If you're in doubt, set it to red and load the code,
@@ -66,8 +66,16 @@ int hours = 8;
 #define GREEN 2
 #define BLUE  3
 #define YELLOW  4
-int systemColor = BLUE;
+int systemColor = RED;
 int display_brightness = 15000; //A larger number makes the display more dim. This is set correctly below.
+
+
+//Power Source
+
+#define BATTERY 0
+#define DC 1
+
+boolean pwrSource =  BATTERY ;
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //Pin definitions
@@ -76,7 +84,7 @@ int digit2 = A3; //Display pin 2
 int digit3 = A4; //Display pin 6
 int digit4 = A5; //Display pin 8
 
-int segA = 2; //Display pin 14
+int segA = 4; //Display pin 14
 int segB = 3; //Display pin 16
 int segC = 8; //Display pin 13
 int segD = 9; //Display pin 3
@@ -87,9 +95,11 @@ int segG = 12; //Display pin 15
 int colons = 13; //Display pin 4
 
 //need to remove this
-int ampm = 13; //Display pin 10
+int ampm = A1; //Display pin 10
 
 int theButton = 2;
+
+int pwrSense = A0; 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //The very important 32.686kHz interrupt handler
@@ -114,14 +124,18 @@ SIGNAL(TIMER2_OVF_vect){
   }
 }
 
-//The interrupt occurs when you push the button
+////The interrupt occurs when you push the button
 SIGNAL(INT0_vect){
   //When you hit the button, we will need to display the time
   //if(show_the_time == false) 
   show_the_time = true;
 }
 
-void setup() {                
+void setup() {
+
+  
+
+   
   //To reduce power, setup all pins as inputs with no pullups
   for(int x = 1 ; x < 18 ; x++){
     pinMode(x, INPUT);
@@ -147,6 +161,8 @@ void setup() {
   pinMode(colons, OUTPUT);
   pinMode(ampm, OUTPUT);
 
+  pinMode(pwrSense, INPUT);
+
   //Power down various bits of hardware to lower power usage  
   set_sleep_mode(SLEEP_MODE_PWR_SAVE);
   sleep_enable();
@@ -155,8 +171,8 @@ void setup() {
 
   ADCSRA &= ~(1<<ADEN); //Disable ADC
   ACSR = (1<<ACD); //Disable the analog comparator
-  DIDR0 = 0x3F; //Disable digital input buffers on all ADC0-ADC5 pins
-  DIDR1 = (1<<AIN1D)|(1<<AIN0D); //Disable digital input buffer on AIN1/0
+  //DIDR0 = 0x3F; //Disable digital input buffers on all ADC0-ADC5 pins
+  //DIDR1 = (1<<AIN1D)|(1<<AIN0D); //Disable digital input buffer on AIN1/0
 
   power_twi_disable();
   power_spi_disable();
@@ -173,8 +189,8 @@ void setup() {
   TIMSK2 = (1<<TOIE2); //Enable the timer 2 interrupt
 
   //Setup external INT0 interrupt
-  EICRA = (1<<ISC01); //Interrupt on falling edge
-  EIMSK = (1<<INT0); //Enable INT0 interrupt
+  // EICRA = (1<<ISC01); //Interrupt on falling edge
+  //EIMSK = (1<<INT0); //Enable INT0 interrupt
 
   //System clock futzing
   //CLKPR = (1<<CLKPCE); //Enable clock writing
@@ -210,8 +226,26 @@ void setup() {
 }
 
 void loop() {
-  if(always_on == false)
+
+  
+  
+   if(digitalRead(pwrSense)){
+      //sleep_mode();
+      //Serial.println("dc jack");
+      always_on = true;
+    } 
+   else{
+      //Serial.println("battery");    
+      always_on = false;
+   }
+   
+   
+   if(always_on == false){
+
+    //Serial.println("Entering sleep mode");
     sleep_mode(); //Stop everything and go to sleep. Wake up if the Timer2 buffer overflows or if you hit the button
+
+   }
 
   if(show_the_time == true || always_on == true) {
     

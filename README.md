@@ -1,12 +1,12 @@
 # FunTime
-A DIY wall clock that doubles up as automatic night lamp.
+FunTime is a simple DIY clock kit, that doubles up as automatic night lamp. While building this kit we learn about how time is computed, converted to secs, mins, hours, days and eventually into years! We will also learn about measuring light and controlling a LED depending on time and light. The end goal is build a cool wall clock, use the time and the light intensity to turn on the night lamp. It will take about an hour to solder and assemble the kit.
+
+Get one at:
+https://www.exploreembedded.com/product/funTime 
+
 Acrylic Design 
-![funtime1](https://cloud.githubusercontent.com/assets/8638394/19187962/58908afc-8cac-11e6-8e46-9a8c639d1b78.PNG)
-
-
-![fun time](https://cloud.githubusercontent.com/assets/8638394/19182448/cc9418b8-8c90-11e6-8999-a27a84ce0288.PNG)
-
-![Prototype Idea](https://github.com/ExploreEmbedded/FunTime/blob/master/Case/funTime.jpg)
+![funtime1](https://exploreembedded.com/wiki/images/4/42/0_funTime_1.jpg)
+![PCB](https://exploreembedded.com/wiki/images/2/28/FunTime_0a.jpg)
 
 
 

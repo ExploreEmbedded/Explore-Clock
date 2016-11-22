@@ -1,19 +1,17 @@
 /*
+	
 
+ Firmware for FunTime DIY wall clock.  The clock is based on the the popular Atmega328 running on Internal 8Mhz oscillator. The clock uses Timer 1 with 32.686kHz ocillator to keep time. The clock is powered by 5V DC adapter, in case
+ of power outage, it automatically switches to the CR2032 coin cell battery and enters sleep mode for power saving.
+
+ The night lamp, simply turns on if it is dark. You can set the value depending on lighting conditions of your house. The higher the value of 
+ sensor, the darker is the room.
  
- This is the firmware for BigTime, the wrist watch kit. It is based on an ATmega328 running with internal
- 8MHz clock and external 32kHz crystal for keeping the time (aka RTC). The code and system have been tweaked
- to lower the power consumption of the ATmeg328 as much as possible. The watch currently uses about 
- 1.2uA in idle (non-display) mode and about 13mA when displaying the time. With a 200mAh regular 
- CR2032 battery you should get 2-3 years of use!
+ For more:
+ https://github.com/ExploreEmbedded/FunTime 
  
- To compile and load this code onto your watch, select "Arduino Pro or Pro Mini 3.3V/8MHz w/ ATmega328" from
- the Boards menu. 
  
- If you're looking to save power in your own project, be sure to read section 9.10 of the ATmega328 
- datasheet to turn off all the bits of hardware you don't need.
- 
- BigTime requires the Pro 8MHz bootloader with a few modifications:
+
  Internal 8MHz
  Clock div 8 cleared
  Brown out detect disabled
@@ -34,8 +32,16 @@
  200mAh / 0.0084mA = 23,809hr = 992 days = 2.7 years
  
 
+ References and Credits:
+ Inspirted by the BigTime kit from Sparkfun. 
+ https://github.com/sparkfun/BigTime 
 
- Modified for funTime wall clock at EE.
+ To Do:
+
+ Add alarm functionality.
+ Option to set light intensity with the switches. The light sensor value can be linearly mapped from 0 to 99. 
+ 
+ 
  */
 #include "main.h"
 
@@ -48,7 +54,7 @@
 int TwelveHourMode = true;
 
 //Set this variable to change how long the time is shown on the watch face. In milliseconds so 1677 = 1.677 seconds
-int show_time_length = 2000;
+int show_time_length = 5000;
 int show_the_time = false;
 
 //You can set always_on to true and the display will stay on all the time
@@ -95,17 +101,23 @@ int segG = 12; //Display pin 15
 int colons = 13; //Display pin 4
 
 //need to remove this
-int ampm = A1; //Display pin 10
+int lightSensor = A1; //Display pin 10
 
 int theButton = 2;
 
 int pwrSense = A0; 
+
+int ampm = 13;
+
+int nightLamp = 6;
+
+static boolean blinkColon = 0;
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //The very important 32.686kHz interrupt handler
 SIGNAL(TIMER2_OVF_vect){
   seconds += 8; //We sleep for 8 seconds instead of 1 to save more power
-  //seconds++; //Use this if we are waking up every second
+ // seconds++; //Use this if we are waking up every second
 
   //Update the minutes and hours variables
   minutes += seconds / 60; //Example: seconds = 2317, minutes = 58 + 38 = 96
@@ -162,17 +174,20 @@ void setup() {
   pinMode(ampm, OUTPUT);
 
   pinMode(pwrSense, INPUT);
+  pinMode(nightLamp, OUTPUT);
+
+  //digitalWrite(nightLamp, HIGH);
 
   //Power down various bits of hardware to lower power usage  
   set_sleep_mode(SLEEP_MODE_PWR_SAVE);
   sleep_enable();
 
-  //Shut off ADC, TWI, SPI, Timer0, Timer1
+    //Shut off ADC, TWI, SPI, Timer0, Timer1
 
-  ADCSRA &= ~(1<<ADEN); //Disable ADC
+  //ADCSRA &= ~(1<<ADEN); //Disable ADC
   ACSR = (1<<ACD); //Disable the analog comparator
-  //DIDR0 = 0x3F; //Disable digital input buffers on all ADC0-ADC5 pins
-  //DIDR1 = (1<<AIN1D)|(1<<AIN0D); //Disable digital input buffer on AIN1/0
+ // DIDR0 = 0x3F; //Disable digital input buffers on all ADC0-ADC5 pins
+ // DIDR1 = (1<<AIN1D)|(1<<AIN0D); //Disable digital input buffer on AIN1/0
 
   power_twi_disable();
   power_spi_disable();
@@ -203,7 +218,7 @@ void setup() {
   //that the correct code is loaded onto the ATmega
   //Display brightness changes based on color
   if(systemColor == RED) {
-    display_brightness = 1500; //The higher the number, the lower the brightness
+    display_brightness = 3000; //The higher the number, the lower the brightness
     showColor("red ");
   }
   else if(systemColor == GREEN) {
@@ -227,22 +242,36 @@ void setup() {
 
 void loop() {
 
-  
+ 
+   
+   
+   
   
    if(digitalRead(pwrSense)){
       //sleep_mode();
       //Serial.println("dc jack");
-      always_on = true;
+        always_on = true;
+        Serial.println(analogRead(lightSensor));
+        if(analogRead(lightSensor) > 700) //if it dark, turn ON the night lamp
+        {
+          digitalWrite(nightLamp, HIGH);
+        }
+        else
+        {  
+          digitalWrite(nightLamp, LOW);
+        }
+      
     } 
    else{
-      //Serial.println("battery");    
+     // Serial.println("battery");    
       always_on = false;
    }
    
    
    if(always_on == false){
 
-    //Serial.println("Entering sleep mode");
+   // Serial.println("Entering sleep mode");
+    digitalWrite(colons, HIGH);
     sleep_mode(); //Stop everything and go to sleep. Wake up if the Timer2 buffer overflows or if you hit the button
 
    }
@@ -254,11 +283,11 @@ void loop() {
     delay(100);
     while(digitalRead(theButton) == LOW) ; //Wait for you to remove your finger
 
-    /*Serial.print(hours, DEC);
-     Serial.print(":");
-     Serial.print(minutes, DEC);
-     Serial.print(":");
-     Serial.println(seconds, DEC);*/
+//     Serial.print(hours, DEC);
+//     Serial.print(":");
+//     Serial.print(minutes, DEC);
+//     Serial.print(":");
+//     Serial.println(seconds, DEC);
 
     showTime(); //Show the current time for a few seconds
 
@@ -266,7 +295,13 @@ void loop() {
     if(digitalRead(theButton) == LOW) setTime();
 
     show_the_time = false; //Reset the button variable
+
+    
+
   }
+
+  
+  
 }
 
 void showTime() {
@@ -441,13 +476,20 @@ void displayNumber(int toDisplay, boolean displayColon) {
       break;
     case 2:
       digitalWrite(digit2, DIGIT_ON);
-      if(displayColon == true) digitalWrite(colons, DIGIT_ON); //When we update digit 2, let's turn on colons as well
       break;
     case 3:
       digitalWrite(digit3, DIGIT_ON);
+      if(displayColon == true){             
+            //Serial.print(blinkColon); 
+            digitalWrite(colons, blinkColon);  
+        }//When we update digit 2, let's turn on colons as well
       break;
     case 4:
       digitalWrite(digit4, DIGIT_ON);
+      if(displayColon == true){ 
+           // Serial.print(blinkColon); 
+            digitalWrite(colons, blinkColon);      
+        }//When we update digit 2, let's turn on colons as well
       break;
     }
 

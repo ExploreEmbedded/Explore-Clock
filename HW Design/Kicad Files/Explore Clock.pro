@@ -1,4 +1,4 @@
-update=10/6/2016 5:25:16 PM
+update=14-Oct-16 10:13:08 AM
 version=1
 last_client=kicad
 [pcbnew]
@@ -63,3 +63,13 @@ LibName31=w_opto
 LibName32=led
 LibName33=H:/Github/Explore-M3-Hardware-Design-/Hardware Design Files/ExploreM3-cache
 LibName34=H:/Github/Explore-M3-Hardware-Design-/Hardware Design Files/ExploreM3
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60

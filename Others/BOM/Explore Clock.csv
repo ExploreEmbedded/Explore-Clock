@@ -1,0 +1,24 @@
+SR No.,Designator,Value,Quantity
+1,AFF1,4 Digit 7 Segment display ( white ),1
+2,C1,0.1uF Disc Capacitor,1
+3,P1,01X07 Female Pin Header,1
+4,"R1,R3",100K Resistors,2
+5,"R2,R5,R8",10K Resistors,3
+6,R4,470E Resistors,1
+7,"R6,R7",1K Resistors,2
+8,BT1,Coin Cell Battery Holder,1
+9,CON1,DC Jack,1
+10,D1,5V1 Zener Diode,1
+11,D2,3mm LED,1
+12,D3,8mm 0.5W Straw hat LED,1
+13,"D4,D5",1N4148 Diodes,2
+14,IC1,ATMEGA328P Controller,1
+15,Q1,BC547  NPN Transistor,1
+16,Q2,BD139 NPN Transistor,1
+17,R9,47E Resistor,1
+18,SP1,Small Buzzer,1
+19,"SW1,SW2",25mm Long Tactile Switch,2
+20,U1,LDR,1
+21,Y1,32.768KHz Crystal,1
+22,"P2,P3,P4,P5",M3 Mounting screws and nuts,8 pair
+,,,
